@@ -1,0 +1,18 @@
+{
+  "name": "slack-tos-example",
+  "version": "1.0.0",
+  "description": "Sample Slack app that uses the Events API and interactive messages to send new users a Terms of Service or welcome message",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "author": "Sachin Ranchod <sranchod@slack-corp.com>",
+  "dependencies": {
+    "axios": "^0.16.0",
+    "body-parser": "^1.17.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "node-json-db": "^0.7.3",
+    "querystring": "^0.2.0"
+  }
+}
