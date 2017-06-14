@@ -10,17 +10,27 @@ const postResult = result => console.log(result.data);
 const message = {
   token: process.env.SLACK_TOKEN,
   as_user: true,
-  text: 'Welcome to the team!',
-  attachments: JSON.stringify([{
-    text: 'Before you continue, we need you to accept our Terms of Service.',
-    callback_id: 'terms-of-service',
-    actions: [{
-      name: 'accept',
-      text: 'Accept',
-      type: 'button',
-      value: 'accept',
-    }],
-  }]),
+  link_names: true,
+  text: 'Welcome to the team! We\'re glad you\'re here.',
+  attachments: JSON.stringify([
+    {
+      title: 'What is Slack?',
+      text: 'Slack is where work happens. If this is your first time using Slack, take some time to read the help docs at get.slack.help and our internal wiki. If you have any questions, jump into #help-slack and we\'ll help you out',
+      color: '#74c8ed',
+    },
+    {
+      title: 'Code of Conduct',
+      text: 'Our goal is to maintain a safe, helpful and friendly community for everyone, regardless of experience, gender identity and expression, sexual orientation, disability, personal appearance, body size, race, ethnicity, age, religion, nationality, or other defining characteristic. Please take the time to read through <https://code.localhost|Code of Conduct> before continuing.',
+      callback_id: 'terms-of-service',
+      color: '#3060f0',
+      actions: [{
+        name: 'accept',
+        text: 'Accept',
+        type: 'button',
+        value: 'accept',
+        style: 'primary',
+      }],
+    }]),
 };
 
 const initialMessage = (teamId, userId) => {
