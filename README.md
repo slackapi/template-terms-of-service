@@ -4,7 +4,7 @@ Sample Slack app that presents a Terms of Service (or any other message) when a 
 
 The user can accept the Terms of Service using message buttons. If a user has been presented with the Terms before and they haven't accepted, a background job can send them a reminder after a specific period of time. Eventually you can use the SCIM API to disable the user's account.
 
-![term-of-service](https://user-images.githubusercontent.com/700173/27057196-f288527a-4f7f-11e7-84d6-23de2d521bdf.gif)
+![term-of-service](https://user-images.githubusercontent.com/700173/27111030-42359a02-5062-11e7-9750-385ae9ca084e.png)
 
 ## Setup
 
