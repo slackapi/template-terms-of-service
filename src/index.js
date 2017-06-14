@@ -61,5 +61,3 @@ app.post('/interactive-message', (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log(`App listening on port ${process.env.PORT}!`);
 });
-
-onboard.initialMessage('T0NA99EG1', 'U0NA9JP18');
