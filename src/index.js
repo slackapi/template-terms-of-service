@@ -32,8 +32,7 @@ app.post('/events', (req, res) => {
       break;
     }
     case 'event_callback': {
-      const body = JSON.parse(req.body.payload);
-      if (body.token === process.env.SLACK_VERIFICATION_TOKEN) {
+      if (req.body.token === process.env.SLACK_VERIFICATION_TOKEN) {
         const event = req.body.event;
 
         // `team_join` is fired whenever a new user (incl. a bot) joins the team
