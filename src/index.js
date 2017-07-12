@@ -54,10 +54,10 @@ app.post('/events', (req, res) => {
  * verification token before continuing.
  */
 app.post('/interactive-message', (req, res) => {
-  if (req.body.token === process.env.SLACK_VERIFICATION_TOKEN) {
+  const { token, user, team } = JSON.parse(req.body.payload);
+  if (token === process.env.SLACK_VERIFICATION_TOKEN) {
     // simplest case with only a single button in the application
     // check `callback_id` and `value` if handling multiple buttons
-    const { user, team } = JSON.parse(req.body.payload);
     onboard.accept(user.id, team.id);
     res.send({ text: 'Thank you! The Terms of Service have been accepted.' });
   } else { res.sendStatus(500); }
