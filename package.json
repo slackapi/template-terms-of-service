@@ -1,7 +1,11 @@
 {
   "name": "slack-tos-example",
+  "private": true,
   "version": "1.0.0",
   "description": "Sample Slack app that uses the Events API and interactive messages to send new users a Terms of Service or welcome message",
+  "engines": {
+    "node": ">= 6.9.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js"
