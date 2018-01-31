@@ -25,7 +25,7 @@ The user can accept the Terms of Service using message buttons. If a user has be
     * `PORT`: The port that you want to run the web server on
 1. If you're running the app locally:
     1. Start the app (`npm start`)
-    1. In another windown, start ngrok on the same port as your webserver (`ngrok http $PORT`)
+    1. In another window, start ngrok on the same port as your webserver (`ngrok http $PORT`)
 
 #### Enable the Events API
 1. Go back to the app settings and click on Events Subscriptions
