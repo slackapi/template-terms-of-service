@@ -4,12 +4,14 @@ const JsonDB = require('node-json-db');
 
 const db = new JsonDB('users', true, false);
 
+const apiUrl = 'https://slack.com/api';
+
+
 const postResult = result => console.log(result.data);
 
 // default message - edit to include actual ToS
 const message = {
-  token: process.env.SLACK_TOKEN,
-  as_user: true,
+  token: process.env.SLACK_ACCESS_TOKEN,
   link_names: true,
   text: 'Welcome to the team! We\'re glad you\'re here.',
   attachments: JSON.stringify([
@@ -30,7 +32,8 @@ const message = {
         value: 'accept',
         style: 'primary',
       }],
-    }]),
+    }]
+  ),
 };
 
 const initialMessage = (teamId, userId) => {
@@ -47,9 +50,10 @@ const initialMessage = (teamId, userId) => {
 
     // send the default message as a DM to the user
     message.channel = userId;
-    const params = qs.stringify(message);
-    const sendMessage = axios.post('https://slack.com/api/chat.postMessage', params);
-    sendMessage.then(postResult);
+    axios.post(`${apiUrl}/chat.postMessage`, qs.stringify(message))
+      .then((result => {
+        console.log(result.data);
+      }));
   } else {
     console.log('Already onboarded');
   }
@@ -69,12 +73,12 @@ const remind = () => {
       Object.keys(data[team]).forEach((user) => {
         if (!data[team][user]) {
           message.channel = user;
-          message.text = 'REMIND I am a test message';
+          message.text = 'REMINDER';
 
-          const params = qs.stringify(message);
-          const sendMessage = axios.post('https://slack.com/api/chat.postMessage', params);
-
-          sendMessage.then(postResult);
+          axios.post(`${apiUrl}/chat.postMessage`, qs.stringify(message))
+          .then((result => {
+            console.log(result.data);
+          }));
         }
       });
     });

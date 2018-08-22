@@ -11,11 +11,14 @@
     "start": "node src/index.js"
   },
   "author": "Sachin Ranchod <sranchod@slack-corp.com>",
+  "contributors": [
+    "Tomomi Imura <timura@slack-corp.com>"
+  ],
   "dependencies": {
     "axios": "^0.16.0",
-    "body-parser": "^1.17.1",
+    "body-parser": "^1.18.3",
     "dotenv": "^4.0.0",
-    "express": "^4.15.2",
+    "express": "^4.16.3",
     "node-json-db": "^0.7.3",
     "querystring": "^0.2.0"
   }

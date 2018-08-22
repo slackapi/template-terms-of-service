@@ -3,14 +3,24 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const onboard = require('./onboard');
+const signature = require('./verifySignature');
 
 const app = express();
 
 /*
- * parse application/x-www-form-urlencoded && application/json
+ * Parse application/x-www-form-urlencoded && application/json
+ * Use body-parser's `verify` callback to export a parsed raw body
+ * that you need to use to verify the signature
  */
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
+const rawBodyBuffer = (req, res, buf, encoding) => {
+  if (buf && buf.length) {
+    req.rawBody = buf.toString(encoding || 'utf8');
+  }
+};
+
+app.use(bodyParser.urlencoded({verify: rawBodyBuffer, extended: true }));
+app.use(bodyParser.json({ verify: rawBodyBuffer }));
 
 app.get('/', (req, res) => {
   res.send('<h2>The Welcome/Terms of Service app is running</h2> <p>Follow the' +
@@ -20,9 +30,7 @@ app.get('/', (req, res) => {
 
 /*
  * Endpoint to receive events from Slack's Events API.
- * Handles:
- *   - url_verification: Returns challenge token sent when present.
- *   - event_callback: Confirm verification token & handle `team_join` event.
+ * It handles `team_join` event callbacks.
  */
 app.post('/events', (req, res) => {
   switch (req.body.type) {
@@ -32,11 +40,19 @@ app.post('/events', (req, res) => {
       break;
     }
     case 'event_callback': {
-      if (req.body.token === process.env.SLACK_VERIFICATION_TOKEN) {
+      // Verify the signing secret
+      if (signature.isVerified(req)) {
         const event = req.body.event;
+        console.log(event)
+
+        // TEST - Remove it later
+        // if (event.type) {
+        //   const { team_id, id } = event.user;
+        //   onboard.initialMessage(team_id, id);
+        // }
+        ///////
 
         // `team_join` is fired whenever a new user (incl. a bot) joins the team
-        // check if `event.is_restricted == true` to limit to guest accounts
         if (event.type === 'team_join' && !event.is_bot) {
           const { team_id, id } = event.user;
           onboard.initialMessage(team_id, id);
@@ -50,12 +66,12 @@ app.post('/events', (req, res) => {
 });
 
 /*
- * Endpoint to receive events from interactive message on Slack. Checks the
- * verification token before continuing.
+ * Endpoint to receive events from interactive message on Slack. 
+ * Verify the signing secret before continuing.
  */
 app.post('/interactive-message', (req, res) => {
   const { token, user, team } = JSON.parse(req.body.payload);
-  if (token === process.env.SLACK_VERIFICATION_TOKEN) {
+  if (signature.isVerified(req)) {
     // simplest case with only a single button in the application
     // check `callback_id` and `value` if handling multiple buttons
     onboard.accept(user.id, team.id);
@@ -63,6 +79,6 @@ app.post('/interactive-message', (req, res) => {
   } else { res.sendStatus(500); }
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`App listening on port ${process.env.PORT}!`);
+const server = app.listen(process.env.PORT || 5000, () => {
+  console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
 });
