@@ -1,6 +1,6 @@
 # Sending a Welcome Message to a New User 
 
-*Updated August 2018: As we have introduced the workspace app (currently in beta), this tutorial and the code samples have been updated using the new token model! All the changes from the previous version of this example, read the [diff.md](diff.md)*
+> :sparkles: *Updated August 2018: As we have introduced the workspace app (currently in beta), this tutorial and the code samples have been updated using the new token model! All the changes from the previous version of this example, read the [diff.md](diff.md)*
 
 *Learn more about the workspace app at the [Slack API doc](https://api.slack.com/workspace-apps-preview).*
 
