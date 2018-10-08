@@ -20,6 +20,7 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.3",
     "node-json-db": "^0.7.3",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "tsscmp": "^1.0.6"
   }
 }
