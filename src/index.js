@@ -43,20 +43,14 @@ app.post('/events', (req, res) => {
       // Verify the signing secret
       if (signature.isVerified(req)) {
         const event = req.body.event;
-        console.log(event)
-
-        // TEST - Remove it later
-        // if (event.type) {
-        //   const { team_id, id } = event.user;
-        //   onboard.initialMessage(team_id, id);
-        // }
-        ///////
-
+        console.log(event);
+        
         // `team_join` is fired whenever a new user (incl. a bot) joins the team
         if (event.type === 'team_join' && !event.is_bot) {
           const { team_id, id } = event.user;
           onboard.initialMessage(team_id, id);
         }
+
         res.sendStatus(200);
       } else { res.sendStatus(500); }
       break;
@@ -69,7 +63,7 @@ app.post('/events', (req, res) => {
  * Endpoint to receive events from interactive message on Slack. 
  * Verify the signing secret before continuing.
  */
-app.post('/interactive-message', (req, res) => {
+app.post('/interactive', (req, res) => {
   const { token, user, team } = JSON.parse(req.body.payload);
   if (signature.isVerified(req)) {
     // simplest case with only a single button in the application

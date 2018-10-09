@@ -14,6 +14,7 @@ const message = {
   token: process.env.SLACK_ACCESS_TOKEN,
   link_names: true,
   text: 'Welcome to the team! We\'re glad you\'re here.',
+  as_user: true,
   attachments: JSON.stringify([
     {
       title: 'What is Slack?',
