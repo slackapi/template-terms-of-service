@@ -15,7 +15,7 @@
     "Tomomi Imura <timura@slack-corp.com>"
   ],
   "dependencies": {
-    "axios": "^0.16.0",
+    "axios": "^0.18.1",
     "body-parser": "^1.18.3",
     "dotenv": "^4.0.0",
     "express": "^4.16.3",
