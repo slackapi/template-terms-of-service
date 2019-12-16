@@ -8,10 +8,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "remind": "node src/remind.js",
+    "dev": "nodemon src/index.js"
   },
   "authors": [
-    "Sachin Ranchod <sranchod@slack-corp.com>",
+    "David Pichsenmeister <opensource@slack.com>",
     "Tomomi Imura <timura@slack-corp.com>"
   ],
   "dependencies": {
@@ -20,7 +22,9 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.3",
     "node-json-db": "^0.7.3",
-    "querystring": "^0.2.0",
     "tsscmp": "^1.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }

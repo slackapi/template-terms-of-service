@@ -15,8 +15,8 @@ The user can accept the Terms of Service using message buttons. If a user has be
 1. [Create an app](https://api.slack.com/apps)
 2. Go to **Bot Users** and click "Add a Bot User" to create a, app bot. Save the change.
 3. Enable Interactive components (See *Enable Interactive Components* below)
-4. Navigate to the **OAuth & Permissions** page and add the following scopes:
-    * `chat:write:bot`
+4. Navigate to the **OAuth & Permissions** page and add the following bot token scopes:
+    * `chat:write`, `im:write`, `users:read`
 5. Click 'Save Changes' and install the app (You should get an OAuth access token after the installation)
 6. Enable the events (See *Enable the Events API* below. It doesn't let you  the Request URL until you run the code!)
 7. In your Slack workspace, invite the bot to #general, where the new user will join.

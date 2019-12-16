@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const onboard = require('./onboard');
 const signature = require('./verifySignature');
+const axios = require('axios');
 
 const app = express();
 
@@ -19,13 +20,18 @@ const rawBodyBuffer = (req, res, buf, encoding) => {
   }
 };
 
-app.use(bodyParser.urlencoded({verify: rawBodyBuffer, extended: true }));
+app.use(bodyParser.urlencoded({ verify: rawBodyBuffer, extended: true }));
 app.use(bodyParser.json({ verify: rawBodyBuffer }));
 
 app.get('/', (req, res) => {
   res.send('<h2>The Welcome/Terms of Service app is running</h2> <p>Follow the' +
-  ' instructions in the README to configure the Slack App and your' +
-  ' environment variables.</p>');
+    ' instructions in the README to configure the Slack App and your' +
+    ' environment variables.</p>');
+});
+
+// trigger the reminder from an external source
+app.get('/remind', (req, res) => {
+  remind()
 });
 
 /*
@@ -44,7 +50,7 @@ app.post('/events', (req, res) => {
       if (signature.isVerified(req)) {
         const event = req.body.event;
         console.log(event);
-        
+
         // `team_join` is fired whenever a new user (incl. a bot) joins the team
         if (event.type === 'team_join' && !event.is_bot) {
           const { team_id, id } = event.user;
@@ -64,12 +70,14 @@ app.post('/events', (req, res) => {
  * Verify the signing secret before continuing.
  */
 app.post('/interactive', (req, res) => {
-  const { token, user, team } = JSON.parse(req.body.payload);
+  const { response_url, user, team } = JSON.parse(req.body.payload);
   if (signature.isVerified(req)) {
     // simplest case with only a single button in the application
     // check `callback_id` and `value` if handling multiple buttons
     onboard.accept(user.id, team.id);
-    res.send({ text: 'Thank you! The Terms of Service have been accepted.' });
+    res.send();
+
+    axios.post(response_url, { text: 'Thank you! The Terms of Service have been accepted.' });
   } else { res.sendStatus(500); }
 });
 

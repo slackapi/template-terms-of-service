@@ -1,4 +1,3 @@
-const qs = require('querystring');
 const axios = require('axios');
 const JsonDB = require('node-json-db');
 
@@ -11,30 +10,49 @@ const postResult = result => console.log(result.data);
 
 // default message - edit to include actual ToS
 const message = {
-  token: process.env.SLACK_ACCESS_TOKEN,
-  link_names: true,
   text: 'Welcome to the team! We\'re glad you\'re here.',
-  as_user: true,
-  attachments: JSON.stringify([
+  blocks: [
     {
-      title: 'What is Slack?',
-      text: 'Slack is where work happens. If this is your first time using Slack, take some time to read the help docs at get.slack.help and our internal wiki. If you have any questions, jump into #help-slack and we\'ll help you out',
-      color: '#74c8ed',
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*Welcome to the team! We\'re glad you\'re here* :tada:'
+      }
     },
     {
-      title: 'Code of Conduct',
-      text: 'Our goal is to maintain a safe, helpful and friendly community for everyone, regardless of experience, gender identity and expression, sexual orientation, disability, personal appearance, body size, race, ethnicity, age, religion, nationality, or other defining characteristic. Please take the time to read through <https://code.localhost|Code of Conduct> before continuing.',
-      callback_id: 'terms-of-service',
-      color: '#3060f0',
-      actions: [{
-        name: 'accept',
-        text: 'Accept',
-        type: 'button',
-        value: 'accept',
-        style: 'primary',
-      }],
-    }]
-  ),
+      type: 'divider'
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*What is Slack?*\nSlack is where work happens. If this is your first time using Slack, take some time to read the <https://get.slack.help|help docs> and our internal wiki. If you have any questions, jump into #help-slack and we\'ll help you out'
+      }
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*Code of Conduct*\nOur goal is to maintain a safe, helpful and friendly community for everyone, regardless of experience, gender identity and expression, sexual orientation, disability, personal appearance, body size, race, ethnicity, age, religion, nationality, or other defining characteristic. Please take the time to read through <https://code.localhost|Code of Conduct> before continuing.'
+      }
+    },
+    {
+      type: 'actions',
+      elements: [
+        {
+          action_id: 'accept',
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            text: 'Accept',
+            emoji: true
+          },
+          style: 'primary',
+          value: 'accept'
+        }
+      ]
+    }
+  ]
 };
 
 const initialMessage = (teamId, userId) => {
@@ -46,14 +64,23 @@ const initialMessage = (teamId, userId) => {
 
   // `data` will be false if nothing is found or the user hasn't accepted the ToS
   if (!data) {
-    // add or update the team/user record
-    db.push(`/${teamId}/${userId}`, false);
-
-    // send the default message as a DM to the user
-    message.channel = userId;
-    axios.post(`${apiUrl}/chat.postMessage`, qs.stringify(message))
+    // open a DM channel with that user and send the default message as a DM to the user
+    axios.post(`${apiUrl}/im.open`, {
+      user: userId
+    }, {
+      headers: { Authorization: "Bearer " + process.env.SLACK_ACCESS_TOKEN }
+    })
+      .then(result => {
+        let channelId = result.data.channel.id;
+        message.channel = channelId;
+        return axios.post(`${apiUrl}/chat.postMessage`, message, {
+          headers: { Authorization: "Bearer " + process.env.SLACK_ACCESS_TOKEN }
+        })
+      })
       .then((result => {
         console.log(result.data);
+        // add or update the team/user record if sending message was successful
+        if (result.data.ok) db.push(`/${teamId}/${userId}`, false);
       }));
   } else {
     console.log('Already onboarded');
@@ -73,13 +100,22 @@ const remind = () => {
     Object.keys(data).forEach((team) => {
       Object.keys(data[team]).forEach((user) => {
         if (!data[team][user]) {
-          message.channel = user;
-          message.text = 'REMINDER';
-
-          axios.post(`${apiUrl}/chat.postMessage`, qs.stringify(message))
-          .then((result => {
-            console.log(result.data);
-          }));
+          axios.post(`${apiUrl}/im.open`, {
+            user: user
+          }, {
+            headers: { Authorization: "Bearer " + process.env.SLACK_ACCESS_TOKEN }
+          })
+            .then(result => {
+              let channelId = result.data.channel.id;
+              message.channel = channelId;
+              message.text = 'REMINDER';
+              return axios.post(`${apiUrl}/chat.postMessage`, message, {
+                headers: { Authorization: "Bearer " + process.env.SLACK_ACCESS_TOKEN }
+              })
+            })
+            .then((result => {
+              console.log(result.data);
+            }));
         }
       });
     });
