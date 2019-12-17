@@ -1,6 +1,6 @@
 # Sending a Welcome Message to a New User 
 
-> :sparkles: *Updated October 2018: As we have introduced some new features, this tutorial and the code samples have been updated! All the changes from the previous version of this example, read the [DIFF.md](DIFF.md)*
+> :sparkles: *Updated December 2019: As we have introduced some new features, this tutorial and the code samples have been updated! All the changes from the previous version of this example, read the [DIFF.md](DIFF.md)*
 
 Sample Slack app that presents a Terms of Service (or any other message) when a new user joins a team.
 
