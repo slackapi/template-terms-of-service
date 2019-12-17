@@ -6,7 +6,7 @@ Sample Slack app that presents a Terms of Service (or any other message) when a 
 
 The user can accept the Terms of Service using message buttons. If a user has been presented with the Terms before and they haven't accepted, a background job can send them a reminder after a specific period of time. Eventually you can use the [SCIM API](https://api.slack.com/scim) to disable the user's account.
 
-![term-of-service](https://user-images.githubusercontent.com/700173/27111030-42359a02-5062-11e7-9750-385ae9ca084e.png)
+![term-of-service](screenshot.png)
 
 ## Setup
 
@@ -15,8 +15,8 @@ The user can accept the Terms of Service using message buttons. If a user has be
 1. [Create an app](https://api.slack.com/apps)
 2. Go to **Bot Users** and click "Add a Bot User" to create a, app bot. Save the change.
 3. Enable Interactive components (See *Enable Interactive Components* below)
-4. Navigate to the **OAuth & Permissions** page and add the following scopes:
-    * `chat:write:bot`
+4. Navigate to the **OAuth & Permissions** page and add the following bot token scopes:
+    * `chat:write`, `im:write`, `users:read`
 5. Click 'Save Changes' and install the app (You should get an OAuth access token after the installation)
 6. Enable the events (See *Enable the Events API* below. It doesn't let you  the Request URL until you run the code!)
 7. In your Slack workspace, invite the bot to #general, where the new user will join.
