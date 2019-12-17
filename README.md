@@ -4,7 +4,7 @@
 
 Sample Slack app that presents a Terms of Service (or any other message) when a new user joins a team.
 
-The user can accept the Terms of Service using message buttons. If a user has been presented with the Terms before and they haven't accepted, a background job can send them a reminder after a specific period of time. Eventually you can use the [SCIM API](https://api.slack.com/scim) to disable the user's account.
+The user can accept the Terms of Service using message buttons. If a user has been presented with the Terms before and they haven't accepted, a background job can send them a reminder after a specific period of time. If you are on Plus plan or Slack Enterprise Grid, you may use the [SCIM API](https://api.slack.com/scim) to disable the user's account.
 
 ![term-of-service](screenshot.png)
 
