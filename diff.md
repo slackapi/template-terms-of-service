@@ -35,7 +35,7 @@ Basically, you need to compare the value of the `X-Slack-Signature`, the HMAC-SH
 
 Learn more at [Verifying requests from Slack](https://api.slack.com/docs/verifying-requests-from-slack).
 
-
+<!--
 ## Token rotation
 
 OAuth refresh tokens are also introduced as a security feature, which allows the app owners to proactively rotate tokens when the tokens are compromised.
@@ -48,3 +48,4 @@ To lean more, read [Token rotation for workspace apps](https://api.slack.com/doc
 
 
 :gift: If you are using the [Node SDK](https://github.com/slackapi/node-slack-sdk/issues/617), the token refresh feature is available for you already!
+-->
