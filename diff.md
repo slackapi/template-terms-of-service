@@ -2,6 +2,25 @@
 
 Now all the Blueprints examples have been updated with new Slack platform features. So what are the *diffs* in this updated example?
 
+---
+## Changes made in December 2019
+
+
+## OAuth Scopes and Permission
+
+We’ve made major improvements to the way scopes work for apps. 
+The `bot` scope used to be very broad and permissive, but now you can request more specific and granular permissions for your app. 
+
+This sample app previously needed the `bot`, and `chat:write:bot` scopes, but now you need the `users:read` scope to read user info, 
+and `chat:write` and `im:write` to post messages in channels and DM respectively. But no other actions can be made unless you give more permissions. 
+
+We recommend selecting only the scopes your app needs. Requesting too many scopes can cause your app to be restricted by a team’s Admin or App Manager.
+
+Please read [Scopes and permissions](https://api.slack.com/scopes) to figure out which scopes you need. 
+
+---
+## Changes made in October 2018
+
 ## OAuth Token
 
 Your OAuth access token should begins with `-xoxb` instead of `-xoxp`. The bot tokens will be the defaul token in future.
