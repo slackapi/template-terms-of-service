@@ -13,13 +13,12 @@ The user can accept the Terms of Service using message buttons. If a user has be
 #### Create a Slack app
 
 1. [Create an app](https://api.slack.com/apps)
-2. Go to **Bot Users** and click "Add a Bot User" to create a, app bot. Save the change.
-3. Enable Interactive components (See *Enable Interactive Components* below)
-4. Navigate to the **OAuth & Permissions** page and add the following bot token scopes:
+2. Enable Interactive components (See *Enable Interactive Components* below)
+3. Navigate to the **OAuth & Permissions** page and add the following bot token scopes:
     * `chat:write`, `im:write`, `users:read`
-5. Click 'Save Changes' and install the app (You should get an OAuth access token after the installation)
-6. Enable the events (See *Enable the Events API* below. It doesn't let you  the Request URL until you run the code!)
-7. In your Slack workspace, invite the bot to #general, where the new user will join.
+4. Click 'Save Changes' and install the app (You should get an OAuth access token after the installation)
+5. Enable the events (See *Enable the Events API* below. It doesn't let you  the Request URL until you run the code!)
+6. In your Slack workspace, invite the bot to #general, where the new user will join.
 
 #### Run locally or [![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/remix/slack-terms-of-service-blueprint)
 1. Get the code
