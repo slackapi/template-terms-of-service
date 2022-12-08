@@ -20,7 +20,7 @@
     "axios": "^0.18.1",
     "body-parser": "^1.18.3",
     "dotenv": "^4.0.0",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "node-json-db": "^0.7.3",
     "tsscmp": "^1.0.6"
   },
